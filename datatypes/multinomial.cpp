@@ -10,12 +10,10 @@ multinomSampler::multinomSampler(class cuda::sampler *gpu,
 				 const std::vector<int> &levels, int nclus)
   : _nclus(nclus), _data(data), _levels(levels)
 {
-  _accum.reserve(levels.size());
   _lpar.reserve(levels.size());
 
   for (auto n : levels) {
-    _accum.emplace_back(Eigen::MatrixXi::Zero(n, nclus));
-    _lpar.emplace_back(Eigen::MatrixXf::Zero(n, nclus));
+    _lpar.emplace_back(Eigen::ArrayXXf::Zero(n, nclus));
   }
 
   if(gpu) {
@@ -43,20 +41,17 @@ multinomSampler::multinomSampler(class cuda::sampler *gpu,
 void
 multinomSampler::sampleParams (const Eigen::Ref<const Eigen::VectorXi> &alloc)
 {
-  for (auto &x : _accum) x.setZero();
-  for (int i = 0; i < nitems(); i++) {
-    int j = alloc(i);
-    for (int f = 0; f < nfeatures(); f++) {
-      _accum[f](_data(f, i), j) += 1;
-    }
-  }
   for (int f = 0; f < nfeatures(); f++) {
-    _lpar[f] = _accum[f].array().cast<float>().unaryExpr([] (float n) {
-        return gamma_distribution<>(0.5 + n, 1)(generator);
-      });
-    for (int i = 0; i < _lpar[f].cols(); i++) {
-      _lpar[f].col(i) = (_lpar[f].col(i).array() / _lpar[f].col(i).sum()).log();
+    auto &acc = _lpar[f];
+    acc.setConstant(0.5);
+
+    for (int i = 0; i < nitems(); i++) {
+      acc(_data(f, i), alloc(i)) += 1;
     }
+    acc = acc.unaryExpr([] (float n) {
+        return gamma_distribution<>(n, 1)(generator);
+      });
+    acc = (acc.rowwise() / acc.colwise().sum()).log();
   }
 }
 
@@ -65,7 +60,7 @@ multinomSampler::Item::operator()(int item) const
 {
   Eigen::VectorXf out = Eigen::VectorXf::Zero(s->nclus());
   for (int f = 0; f < s->nfeatures(); f++) {
-    out += s->_lpar[f].row(s->_data(f,item));
+    out += s->_lpar[f].row(s->_data(f,item)).matrix();
   }
   return out;
 }

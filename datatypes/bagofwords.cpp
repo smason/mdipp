@@ -30,17 +30,14 @@ bagofwordsSampler::sampleParams (const Eigen::Ref<const Eigen::VectorXi> &alloc)
 {
   _lpar.setConstant(0.5);
   for (int item = 0; item < nitems(); item++) {
-    _lpar.col(alloc[item]) += _data.col(item).cast<float>();
+    _lpar.col(alloc[item]) += _data.col(item).cast<float>().array();
   }
 
   _lpar = _lpar.array().unaryExpr([] (float alpha) {
       return gamma_distribution<float>(alpha, 1)(generator);
     });
 
-  for (int clus = 0; clus < nclus(); clus++) {
-    // normalise distribution
-    _lpar.col(clus) = (_lpar.col(clus).array() / _lpar.col(clus).sum()).log();
-  }
+  _lpar = (_lpar.rowwise() / _lpar.colwise().sum()).log();
 }
 
 Eigen::VectorXf

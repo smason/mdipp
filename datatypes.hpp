@@ -142,7 +142,7 @@ class bagofwordsSampler : public sampler {
   int _nclus;
   const Eigen::MatrixXi &_data;
 
-  Eigen::MatrixXf _lpar;
+  Eigen::ArrayXXf _lpar;
 
   class Item : public item {
     const bagofwordsSampler *s;
@@ -189,8 +189,7 @@ class multinomSampler : public sampler {
   const Eigen::MatrixXi &_data;
   const std::vector<int> &_levels;
 
-  std::vector<Eigen::MatrixXi> _accum;
-  std::vector<Eigen::MatrixXf> _lpar;
+  std::vector<Eigen::ArrayXXf> _lpar;
 
   class Item : public item {
     const multinomSampler *s;

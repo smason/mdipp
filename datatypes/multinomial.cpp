@@ -16,8 +16,8 @@ multinomSampler::multinomSampler(class cuda::sampler *gpu,
     _lpar.emplace_back(Eigen::ArrayXXf::Zero(n, nclus));
   }
 
-  if(gpu) {
 #ifndef NOCUDA
+  if(gpu) {
     int nlevels = 0;
     for (auto n : levels)
       nlevels = std::max(nlevels, n);
@@ -30,12 +30,12 @@ multinomSampler::multinomSampler(class cuda::sampler *gpu,
     _gpu.d_lpar.resize(nclus * nfeatures() * nlevels);
 
     _gpu.d_data = eigenMatrixToStdVector(data.transpose());
-#endif
   } else {
     _gpu.gpu = 0;
     _gpu.nfeatures = 0;
     _gpu.nlevels   = 0;
   }
+#endif
 }
 
 void

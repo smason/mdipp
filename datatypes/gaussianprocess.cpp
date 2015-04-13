@@ -43,8 +43,8 @@ gpSampler::gpSampler(class cuda::sampler *gpu,
   for (int i = 0; i < nclus; i++)
     _gp.emplace_back(_prior);
 
-  if (gpu) {
 #ifndef NOCUDA
+  if (gpu) {
     _gpu.gpu = gpu->nextFileSampler();
     _gpu.nfeatures = nfeatures();
 
@@ -53,11 +53,11 @@ gpSampler::gpSampler(class cuda::sampler *gpu,
 
     _gpu.d_sampfn.resize(nfeatures() * nclus);
     _gpu.d_sigma.resize(nclus);
-#endif
   } else {
     _gpu.gpu = 0;
     _gpu.nfeatures = 0;
   }
+#endif
 }
 
 void

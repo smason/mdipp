@@ -11,8 +11,8 @@ gaussianSampler::gaussianSampler(class cuda::sampler *gpu,
     _mu(data.rows(), nclus+1), _tau(data.rows(), nclus+1),
     _featurestate(Eigen::VectorXi::Ones(data.rows()))
 {
-  if(gpu) {
 #ifndef NOCUDA
+  if(gpu) {
     _gpu.gpu = gpu->nextFileSampler();
     _gpu.nfeatures = nfeatures();
 
@@ -20,11 +20,11 @@ gaussianSampler::gaussianSampler(class cuda::sampler *gpu,
     _gpu.d_par.resize(nclus * nfeatures());
 
     _gpu.d_data = eigenMatrixToStdVector(data.transpose());
-#endif
   } else {
     _gpu.gpu = 0;
     _gpu.nfeatures = 0;
   }
+#endif
 }
 
 std::vector<runningstats<> >

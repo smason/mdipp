@@ -9,8 +9,8 @@ bagofwordsSampler::bagofwordsSampler(class cuda::sampler *gpu, const Eigen::Matr
 {
   _lpar.setZero();
 
-  if(gpu) {
 #ifndef NOCUDA
+  if(gpu) {
     _gpu.gpu = gpu->nextFileSampler();
     _gpu.nfeatures = nfeatures();
 
@@ -18,11 +18,11 @@ bagofwordsSampler::bagofwordsSampler(class cuda::sampler *gpu, const Eigen::Matr
     _gpu.d_lpar.resize(nclus * nfeatures());
 
     _gpu.d_data = eigenMatrixToStdVector(data.transpose());
-#endif
   } else {
     _gpu.gpu = 0;
     _gpu.nfeatures = 0;
   }
+#endif
 }
 
 void

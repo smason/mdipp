@@ -1,8 +1,6 @@
 #ifndef cudasampler_hpp
 #define cudasampler_hpp
 
-#ifndef NOCUDA
-
 #include <vector>
 #include <stdexcept>
 #include <iostream>
@@ -284,7 +282,5 @@ namespace cuda {
     void accumAllocProbs();
   };
 }
-
-#endif // #ifdef NOCUDA
 
 #endif // #ifndef cudasampler_hpp

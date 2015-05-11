@@ -10,7 +10,7 @@ SUBDIRS := cuda datatypes
 OBJS := interdataset.o csv.o csvpp.o shared.o datatypes/datatypes.a
 
 ifdef ncuda
-LIBS := -static-libgcc -static-libstdc++ /usr/local/lib/libboost_program_options.a
+LIBS := -static-libgcc -static-libstdc++ -lboost_program_options
 else
 LIBS := -lboost_program_options
 OBJS := $(OBJS) cuda/cudasampler.a

@@ -8,6 +8,26 @@
 
 #include "csv.h"
 
+#if defined(__linux__) || defined(WIN32)
+/* stolen from http://geneslinuxbox.net:6309/gene/toolshed/libdecb/libdecbsrec.c */
+static inline int digittoint(int c)
+/* implemented based on OSX man page */
+{
+	/* if not 0-9, a-f, or A-F then return 0 */
+	if (!isxdigit(c))
+		return 0;
+
+	if (isdigit(c))
+		return c - '0';
+
+	if (isupper(c))
+		return c - 'A' + 10;
+
+	/* not 0-9, not A-F, must be a-f */
+	return c - 'a' + 10;
+}
+#endif
+
 int
 csv_parse(struct csvfile *csv, FILE *fd)
 {

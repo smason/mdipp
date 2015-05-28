@@ -58,7 +58,8 @@ public:
   }
 
   void columnbreak() {
-    _colbreak = true;
+    if (!_firstcol)
+      _colbreak = true;
   }
 
   void write(short i) { writeraw(i); }

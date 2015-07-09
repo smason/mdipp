@@ -12,7 +12,7 @@ given the data.
 To see the simple case of clustering a single normally distributed
 dataset, run:
 
-    $ mdi++ N input.csv > demo/mcmc_01.csv
+    $ mdi++ N input.csv > mcmc_01.csv
 
 As can hopefully be seen from this command line, the list of input
 files is specified and prefixed by their "data type", with standard
@@ -23,69 +23,31 @@ The majority of the implementation of MDI++ is in C++ with compute
 intensive portions employing CUDA.  A number of R scripts are provided
 for the purposes of plotting and extracting a canonical clustering.
 As with most Unix programs, a synopsis of command line options can be
-displayed by running either:
+displayed by running:
 
     $ mdi++ --help
 
-There are a number of R scripts in the "scripts" subdirectory that can
-be used to load the CSV files MDI++ generates.  Once the CSV files
-have been loaded various analyses and plots can be generated to help
-you understand the clustering.  Inside R or RStudio, plots can be
-generated
-
-    > source('scripts/analysis.R')
-    > dta <- loadDataFilesFromPath('demo/input.csv')
-    > out <- readMdiMcmcOutput('demo/mcmc_01.csv')
-    > cpsm <- generateConsensusPSM(out)
-    > plotConsensusPSM(cpsm, dta, )
-
-This program has various build-time requirements, namely a recent
-build of the C++ libraries Boost and Eigen, and a recent C++11
-compiler such as GCC 4.9 or clang.  Note, that in order to run with
-CUDA you'll probably need to use gcc as that was the only way I could
-get libstdc++ bindings correct---patches welcome to fix this!  The
-code has been developed under both Ubuntu and OS X and should just
-work with either, I don't use Windows at the moment so it may require
-significant work to build/use it there.
+There are a number of R scripts in the `scripts` subdirectory that can
+be used to load the CSV files MDI++ generates, the `demo` subdirectory
+contains example data and analysis scripts, all further documentation
+is included in the `docs` subdirectory.
 
 # Building #
 
-I develop under Ubuntu and OSX, so these should be well supported.
-The code is written in C++ and uses some C++11 extensions, so a
-somewhat recent compiler is needed, I use GCC-4.9.  A couple of
-external libraries are used: Boost and Eigen.  On OSX, these are
-somewhat complicated by the choice of standard libraries (or were when
-I started work and haven't checked, simplifications welcome!) and
-hence I use homebrew to install these as:
+This software has been primarily developed under Mac OSX and Ubuntu,
+so these will be best supported.  The software dependencies are a
+C++11 compiler (such as GCC or Clang) and the Boost and Eigen
+libraries.  These can be installed under OSX, assuming you are not
+using CUDA features, by running:
 
-    $ brew install --c++11 --cc=gcc-4.9 --build-from-source boost eigen
+    $ brew install --c++11 boost eigen
 
-where gcc-4.9 is the compiler you're using--on Linux everything just
-works, so no need to worry there, just do the normal:
+or under Ubuntu by running:
 
     $ sudo apt-get install libboost-all-dev libeigen3-dev
 
-and all should be OK.  If you want to use GPU acceleration, you will
-need the CUDA toolkit to be installed (I'm currently using 6.5).
-There are various ways of going about this, but for reference under
-OSX I used cuda_6.5.14_mac_64.pkg from NVIDIA and under my recent
-version of Ubuntu it is already included and can be installed with:
-
-    $ sudo apt-get install nvidia-cuda-toolkit
-
-Some modification of config.mk may be needed to get it building with
-CUDA, there are some commented sections that work for my various
-configurations.
-
-Should you not want to build with CUDA support, you can set the
-preprocessor macro "ncuda", for example:
-
-    $ make ncuda=1
-
-The makefiles also support "opt" for turning optimisations on, and
-"ndebug" for turning off debug support.  To build for highest
-performance, you can therefore build with:
-
-    $ make ndebug=1 opt=1
-
-although I'd recommend not turning off debug information.
+Once these dependencies have been installed, one should be able to
+type `make` and the software will build. There are some system
+specific dependencies that are defined in `config.mk` that may need to
+be tweaked depending on your system, and for more details see
+`docs/building.md`.

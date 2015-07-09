@@ -1,22 +1,22 @@
-source("scripts/datagen.R")
 source("scripts/analysis.R")
+source("demo/datagen.R")
 
 # draw a sample from our dirichlet process
 base <- rdirichletprocess(100)
 # draw a dataset from each of our datatypes and write out so MDI can see it
-write.csv(create.normgam(base,        10),  "test/normgam.csv")
-write.csv(create.gaussianprocess(base,20),  "test/gaussianprocess.csv")
-write.csv(create.multinom(base, rep(3,10)), "test/multinom.csv")
-write.csv(create.bagofwords(base,100, 10),  "test/bagwords.csv")
+write.csv(create.normgam(base,        10),  "demo/normgam.csv")
+write.csv(create.gaussianprocess(base,20),  "demo/gaussianprocess.csv")
+write.csv(create.multinom(base, rep(3,10)), "demo/multinom.csv")
+write.csv(create.bagofwords(base,100, 10),  "demo/bagwords.csv")
 
 # run MDI
-system("cd test; ../mdi++ N normgam.csv GP gaussianprocess.csv M multinom.csv BW bagwords.csv > mcmc.csv")
+system("cd demo; ../mdi++ N normgam.csv GP gaussianprocess.csv M multinom.csv BW bagwords.csv > mcmc.csv")
 
-# load our test data back in (normally you won't be generating data in R!)
-yg  <- loadDataGauss("test/normgam.csv")
-ygp <- loadDataGP("test/gaussianprocess.csv")
-ymn <- loadDataMultinom("test/multinom.csv")
-ybw <- loadDataBagOfWords("test/bagwords.csv")
+# load our demo data back in (normally you won't be generating data in R!)
+yg  <- loadDataGauss("demo/normgam.csv")
+ygp <- loadDataGP("demo/gaussianprocess.csv")
+ymn <- loadDataMultinom("demo/multinom.csv")
+ybw <- loadDataBagOfWords("demo/bagwords.csv")
 
 # put them in a list for easy access
 datafiles <- list(yg,ygp,ymn,ybw)
@@ -26,7 +26,7 @@ par(mfrow=c(2,2))
 for (y in datafiles) plot(y)
 
 # load the MC output
-mcmc <- readMdiMcmcOutput("test/mcmc.csv")
+mcmc <- readMdiMcmcOutput("demo/mcmc.csv")
 
 plotSingleMcmcSample(mcmc[1000,],datafiles)
 plotSingleMcmcSample(mcmc[2000,],datafiles)

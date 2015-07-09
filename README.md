@@ -12,7 +12,7 @@ given the data.
 To see the simple case of clustering a single normally distributed
 dataset, run:
 
-    $ mdi++ N demo/input.csv > demo/mcmc_01.csv
+    $ mdi++ N input.csv > demo/mcmc_01.csv
 
 As can hopefully be seen from this command line, the list of input
 files is specified and prefixed by their "data type", with standard
@@ -76,3 +76,16 @@ version of Ubuntu it is already included and can be installed with:
 Some modification of config.mk may be needed to get it building with
 CUDA, there are some commented sections that work for my various
 configurations.
+
+Should you not want to build with CUDA support, you can set the
+preprocessor macro "ncuda", for example:
+
+    $ make ncuda=1
+
+The makefiles also support "opt" for turning optimisations on, and
+"ndebug" for turning off debug support.  To build for highest
+performance, you can therefore build with:
+
+    $ make ndebug=1 opt=1
+
+although I'd recommend not turning off debug information.

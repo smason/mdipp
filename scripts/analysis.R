@@ -265,9 +265,9 @@ getMdiAllocations <- function (mcmc, k) {
   allocs <- attr(mcmc, "allocs")
   if (k < 1 || k > length(allocs))
     stop("the requested dataset doesn't exist in this chain")
-  
-  alloc <- as.matrix(mcmc[,allocs[[k]]])
-  colnames(alloc) <- sub(sprintf('^Dataset%i_', k),'',colnames(alloc))
+  ii <- allocs[[k]]
+  alloc <- as.matrix(mcmc[,ii])
+  colnames(alloc) <- sub(sprintf('^Dataset%i_', k),'',colnames(mcmc)[ii])
   alloc
 }
 
@@ -456,4 +456,12 @@ plotConsensusPSM <- function (cpsm, datafiles, cut, pal=gray.colors(64), col.box
       mtext(names[[i]],2,1)
     }
   }
+}
+
+extractPSMClustPartition <- function (cpsm, cuts, datafiles=NULL) {
+    xx <- sapply(1:length(cpsm$cc), function(i)
+                 cutree(cpsm$hc,cuts[[i]]))
+    if(!is.null(datafiles))
+        colnames(xx) <- lapply(datafiles, function(x) attr(x,"name"))
+    xx
 }

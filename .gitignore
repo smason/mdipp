@@ -1,3 +1,26 @@
+# C/C++ compiler output
+*.a
+*.o
+*.dSYM
+/mdi++
+
+# LaTeX output
+*.log
+*.aux
+*.dvi
+
+# iPython/Jupyter
+.ipynb_checkpoints
+
+# R files
+*.Rproj
 .Rproj.user
 .Rhistory
 .RData
+
+# Emacs backup files
+\#*#
+.#*
+
+# Misc
+.DS_Store

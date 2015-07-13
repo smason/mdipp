@@ -8,14 +8,38 @@ providing a template for your own analysis.
 
 TODO: more details
 
+# File formats #
+
+MDI++ reads and writes a variety of somewhat standard format CSV
+files, these have allowed easy interoperability of data between MDI,
+R, Python and Matlab.  The program assumes rectangular input format,
+i.e. all rows have the same number of columns.  The for row contains
+the feature names and the first column the names of the items, for
+example:
+
+    expression, idx, idy
+	gene 1, 1.5, 2.3
+	gene 2, 1.4, 4.0
+	gene 3, 2.3, 0.7
+
+defines a file with three genes as items, each having expression data
+across two individuals.  The value of the topleft cell will be
+ignored, but can be useful to remind you what the data is.  The format
+of the numeric data here changes depending on the *data type*.
+
+## Data Types ##
+
+### `N`: Independent Gaussians ###
+
+### `GP`:  Gaussian Process ###
+
+### `M`: Multinomial ###
+
+### `BW`: Bag of Words ###
+
 ## Analysis Scripts ##
 
-Once the CSV files have been loaded various analyses and plots can be
-generated to help you understand the clustering.  Inside R or RStudio,
-plots can be generated
-
-    > source('scripts/analysis.R')
-    > dta <- loadDataFilesFromPath('demo/input.csv')
-    > out <- readMdiMcmcOutput('demo/mcmc_01.csv')
-    > cpsm <- generateConsensusPSM(out)
-    > plotConsensusPSM(cpsm, dta, )
+One MDI++ has run the Monte Carlo output can be read into another
+program for further analysis and plotting.  I have included various
+scripts for analysing this posterior in R and there is a
+iPython/Jupyter notebook demonstrating the use of these scripts.

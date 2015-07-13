@@ -1,28 +1,34 @@
 # Building MDI++ #
 
-This program has various build-time requirements, namely a recent
-build of the C++ libraries Boost and Eigen, and a recent C++11
-compiler such as GCC 4.9 or clang.  Note, that in order to run with
-CUDA you'll probably need to use gcc as that was the only way I could
-get libstdc++ bindings correct—patches welcome to fix this!  The code
-has been developed under both Ubuntu and OS X and should just work
-with either, I don't use Windows at the moment so it may require
-significant work to build/use it there.
+This program has various build-time requirements, these are:
 
-I develop under Ubuntu and OSX, so these should be well supported.
-The code is written in C++ and uses some C++11 extensions, so a
-somewhat recent compiler is needed, I use GCC-4.9.  A couple of
-external libraries are used: Boost and Eigen.  On OSX, these are
-somewhat complicated by the choice of standard libraries (or were when
-I started work and haven't checked, simplifications welcome!) and
-hence I use homebrew to install these as:
+1. **C++11 compiler**, GCC or Clang have been tested under OSX and
+   Ubuntu.
 
-    $ brew install --c++11 --cc=gcc-4.9 --build-from-source boost eigen
+2. **GNU make**, limited GNU features are used, but I haven't tested
+   with anything else.
 
-where gcc-4.9 is the compiler you're using—on Linux everything just
-works, so no need to worry there, just do the normal:
+3. **pkg-config**, used within `config.mk` to auto-detect the location
+   of headers
 
-    $ sudo apt-get install libboost-all-dev libeigen3-dev
+4. **Boost**, only the `program_options` module is used to parse command
+   line parameters at the moment.
+
+5. **Eigen 3**, is used for all linear algebra within MDI++.
+
+6. optional: **CUDA**, is used for enable GPU based computation.
+
+What you have to do to get these various packages installed on your
+computer will depend; I'll start by assuming that the reader is
+running Ubuntu.
+
+## Ubuntu ##
+
+Installation under Ubuntu is easiest, after downloading the code,
+running the following commands should suffice to build MDI++:
+
+    $ sudo apt-get install build-essentials libboost-all-dev libeigen3-dev
+	$ sudo apt-get install nvidia-cuda-toolkit  # only needed if GPU support wanted
 
 and all should be OK.  If you want to use GPU acceleration, you will
 need the CUDA toolkit to be installed (I'm currently using 6.5).
@@ -36,16 +42,44 @@ Some modification of config.mk may be needed to get it building with
 CUDA, there are some commented sections that work for my various
 configurations.
 
+## Building MDI++ ##
+
 Should you not want to build with CUDA support, you can set the
 preprocessor macro `ncuda`, for example:
 
     $ make ncuda=1
 
-The makefiles also support `opt` for turning optimisations on, and
-`ndebug` for turning off debug support.  To build for highest
-performance, you can therefore build with:
+The makefiles also support `opt` for turning optimisations, due to
+optimisations within Eigen it is strongly recommended to build with
+this options when analysing larger datasets:
 
-    $ make ndebug=1 opt=1
+    $ make opt=1
 
-although I'd recommend not turning off debug information as this makes
-little runtime difference and significantly hinders debugging.
+the `ncuda` and `opt` flags can both be passed to turn off CUDA
+support while turning on compiler optimisations.
+
+## OS X ##
+
+There are a variety of package managers available under OS X, common
+alternatives are Fink, **something** and Homebrew, but I personally use
+[http://brew.sh/](Homebrew) so the following instructions will target
+this.  Note that you should expect to encouter incompatibilities if
+you install more than one of the above systems.
+
+Installing the required C++ libraries under Homebrew is similar to
+Ubuntu:
+
+    $ brew install --c++11 boost eigen
+
+You will need a working compiler to install these packages, so it
+doesn't need to be requested explicitly.  However, and unfortunately,
+interactions with CUDA make the above simple recepie more complicated
+due to it using a different `stdlib`.  The easiest way I have found of
+getting CUDA support working under OSX is by using GCC.  You would
+threfore run:
+
+    $ brew install gcc-4.9
+    $ brew install --c++11 --cc=gcc-4.9 --build-from-source boost eigen
+
+which will install the compiler and then build and install the C++
+libraries using the correct conventions.

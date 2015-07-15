@@ -6,7 +6,9 @@ The `demo` subdirectory includes some example data and scripts that
 can be used to ensure that MDI++ is functioning correctly, as well as
 providing a template for your own analysis.
 
-TODO: more details
+There is a [Jupyter/iPython notebook](mdi demo.ipynb) demonstrating
+how to use MDI++.  It runs through generating suitable input, running
+MDI and generating plots.
 
 # File formats #
 
@@ -106,7 +108,7 @@ datatype.
 
 ## Analysis Scripts ##
 
-One MDI++ has run the Monte Carlo output can be read into another
-program for further analysis and plotting.  I have included various
-scripts for analysing this posterior in R and there is a
+One MDI++ has been executed the Monte Carlo output can be read into
+another program for further analysis and plotting.  I have included
+various scripts for analysing this posterior in R and there is a
 iPython/Jupyter notebook demonstrating the use of these scripts.

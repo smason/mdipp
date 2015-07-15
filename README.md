@@ -35,8 +35,8 @@ is included in the `docs` subdirectory.
 # Building #
 
 This software has been primarily developed under Mac OSX and Ubuntu,
-so these will be best supported.  The software dependencies are a
-C++11 compiler (such as GCC or Clang) and the Boost and Eigen
+so these are currently best supported.  The software dependencies are
+a C++11 compiler (such as GCC or Clang) and the [Boost] and [Eigen]
 libraries.  These can be installed under OSX, assuming you are not
 using CUDA features, by running:
 
@@ -50,4 +50,8 @@ Once these dependencies have been installed, one should be able to
 type `make` and the software will build. There are some system
 specific dependencies that are defined in `config.mk` that may need to
 be tweaked depending on your system, and for more details see
-`docs/building.md`.
+[`docs/install.md`][install].
+
+[Boost]: http://www.boost.org/
+[Eigen]: http://eigen.tuxfamily.org/
+[install]: docs/install.md

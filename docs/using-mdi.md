@@ -23,19 +23,61 @@ example:
 	gene 3, 2.3, 0.7
 
 defines a file with three genes as items, each having expression data
-across two individuals.  The value of the topleft cell will be
-ignored, but can be useful to remind you what the data is.  The format
-of the numeric data here changes depending on the *data type*.
+across two individuals and hence would be suited to the independent
+Gaussians datatype.  The value of the topleft cell will be ignored,
+but can be useful to remind you what the data is.  The format of the
+numeric data here changes depending on the *data type*.
 
 ## Data Types ##
 
+The rectangular CSV file format above applies to all datatypes
+currently supported.  However, similar to the previous implementation
+missing values are not supported and each model places additional
+constraints upon the basic format.
+
 ### `N`: Independent Gaussians ###
 
-### `GP`:  Gaussian Process ###
+This datatype assumes that each value is an independent draw from a
+Gaussian with mean and variance inferred for each feature and cluster.
+The values are floating point numbers and most standard formats are
+supported, but I believe the decimal point has to be a '`.`',
+i.e. period, and I'd not recommend using thousands separators.
+
+The data should be normalised before running MDI such that cluster
+means will be approximately standard normal and it's unlikely that
+cluster variance will be greater than one.
+
+Feature selection is supported, with clusters sharing the same mean
+and variance when their feature is "off".
+
+### `GP`: Gaussian Process ###
+
+This datatype takes data in a very similar format to the independent
+Gaussians, except that the feature names are defined to be the time
+points at which the data was sampled.
+
+Feature selection is not supported due to covariance existing between
+features, and time should run over approximately [0–1] and data
+shouldn't be too far off standard-normal.
 
 ### `M`: Multinomial ###
 
+This datatype is for unordered discrete data and assumes data are
+integer values, with each feature being independent.
+
+Feature selection is supported in a similar way to the independent
+Gaussians.
+
 ### `BW`: Bag of Words ###
+
+The Bag-of-Words datatype is somewhat different from the above; it is
+assumed that there are several "words" that can appear multiple times
+for each item.  Each feature is the sum of the number of times this
+word appears associated with this item, values are therefore positive
+integers.
+
+Feature selection is unsupported for similar reasons to the GP
+datatype.
 
 ## Analysis Scripts ##
 

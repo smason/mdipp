@@ -33,7 +33,7 @@ running the following commands should suffice to build MDI++:
 and all should be OK.  If you want to use GPU acceleration, you will
 need the CUDA toolkit to be installed (I'm currently using 6.5).
 There are various ways of going about this, but for reference under
-OSX I used cuda_6.5.14_mac_64.pkg from NVIDIA and under my recent
+OSX I used `cuda_6.5.14_mac_64.pkg` from NVIDIA and under my recent
 version of Ubuntu it is already included and can be installed with:
 
     $ sudo apt-get install nvidia-cuda-toolkit
@@ -83,3 +83,27 @@ threfore run:
 
 which will install the compiler and then build and install the C++
 libraries using the correct conventions.
+
+## Redhat Linux ##
+
+Redhat follows a similar naming convention to Ubuntu.  Boost and Eigen
+can be installed with the following commands:
+
+    # yum install boost boost-devel
+    # yum install eigen3 eigen3-devel
+
+then you probably need to get an update compiler installed as the
+default included in RedHat is very out of date.  This can be
+accomplished by running:
+
+	# yum install devtoolset-2-toolchain
+
+`devtoolset-3` is also available, and can be used if you are able to
+use it.  Finally the build command is somewhat different, as you need
+to run it "within" Redhat's Developer Toolset:
+
+	$ scl enable devtoolset-2 'make ncuda=1'
+
+We don't have an Nvidia card on this box so therefore can't comment on
+installing CUDA inside Redhat.  If you have success please let me know
+and I'll update this document and other people can benefit.

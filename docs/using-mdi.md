@@ -75,7 +75,9 @@ means will be approximately standard normal and it's unlikely that
 cluster variance will be greater than one.
 
 Feature selection is supported, with clusters sharing the same mean
-and variance when their feature is "off".
+and variance when their feature is "off".  Using more than about 15
+features will lead to issues with the MC chain not mixing
+appropriately.
 
 ### `GP`: Gaussian Process ###
 
@@ -85,7 +87,9 @@ points at which the data was sampled.
 
 Feature selection is not supported due to covariance existing between
 features, and time should run over approximately [0–1] and data
-shouldn't be too far off standard-normal.
+shouldn't be too far off standard-normal.  This datatype still
+struggle with more than about 30 features (mostly depending on their
+lengthscale).
 
 ### `M`: Multinomial ###
 
@@ -93,7 +97,8 @@ This datatype is for unordered discrete data and assumes data are
 integer values, with each feature being independent.
 
 Feature selection is supported in a similar way to the independent
-Gaussians.
+Gaussians.  This datatype will struggle to mix with more than about 20
+features.
 
 ### `BW`: Bag of Words ###
 
@@ -104,7 +109,9 @@ word appears associated with this item, values are therefore positive
 integers.
 
 Feature selection is unsupported for similar reasons to the GP
-datatype.
+datatype.  This data should allow the most features, upto 50 before
+issues with mixing occur but depends on the word counts, i.e. larger
+values in the row sums will cause more issues mixing.
 
 ## Analysis Scripts ##
 

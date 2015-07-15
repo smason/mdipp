@@ -12,7 +12,7 @@ given the data.
 To see the simple case of clustering a single normally distributed
 dataset, run:
 
-    $ mdi++ N input.csv > mcmc_01.csv
+    $ mdi++ N demo/normgam.csv > mcmc_01.csv
 
 As can hopefully be seen from this command line, the list of input
 files is specified and prefixed by their "data type", with standard
@@ -28,9 +28,9 @@ displayed by running:
     $ mdi++ --help
 
 There are a number of R scripts in the `scripts` subdirectory that can
-be used to load the CSV files MDI++ generates, the `demo` subdirectory
-contains example data and analysis scripts, all further documentation
-is included in the `docs` subdirectory.
+be used to load the CSV files MDI++ generates, the [`demo`]
+subdirectory contains example data and analysis scripts, all further
+documentation is included in the [`docs`] subdirectory.
 
 # Building #
 

@@ -28,9 +28,9 @@ displayed by running:
     $ mdi++ --help
 
 There are a number of R scripts in the `scripts` subdirectory that can
-be used to load the CSV files MDI++ generates, the [`demo`]
+be used to load the CSV files MDI++ generates, the [`demo`][demo]
 subdirectory contains example data and analysis scripts, all further
-documentation is included in the [`docs`] subdirectory.
+documentation is included in the [`docs`][docs] subdirectory.
 
 # Building #
 

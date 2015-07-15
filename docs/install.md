@@ -1,4 +1,4 @@
-# Building MDI++ #
+# Installing MDI++ #
 
 This program has various build-time requirements, these are:
 
@@ -61,9 +61,9 @@ support while turning on compiler optimisations.
 ## OS X ##
 
 There are a variety of package managers available under OS X, common
-alternatives are Fink, **something** and Homebrew, but I personally use
-[http://brew.sh/](Homebrew) so the following instructions will target
-this.  Note that you should expect to encouter incompatibilities if
+alternatives are Fink, MacPorts and Homebrew, but I personally use
+[Homebrew](http://brew.sh/) so the following instructions will target
+this.  Note that you should expect to encounter incompatibilities if
 you install more than one of the above systems.
 
 Installing the required C++ libraries under Homebrew is similar to
@@ -73,7 +73,7 @@ Ubuntu:
 
 You will need a working compiler to install these packages, so it
 doesn't need to be requested explicitly.  However, and unfortunately,
-interactions with CUDA make the above simple recepie more complicated
+interactions with CUDA make the above simple recipe more complicated
 due to it using a different `stdlib`.  The easiest way I have found of
 getting CUDA support working under OSX is by using GCC.  You would
 threfore run:

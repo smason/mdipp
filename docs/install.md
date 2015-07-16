@@ -42,22 +42,6 @@ Some modification of config.mk may be needed to get it building with
 CUDA, there are some commented sections that work for my various
 configurations.
 
-## Building MDI++ ##
-
-Should you not want to build with CUDA support, you can set the
-preprocessor macro `ncuda`, for example:
-
-    $ make ncuda=1
-
-The makefiles also support `opt` for turning optimisations, due to
-optimisations within Eigen it is strongly recommended to build with
-this options when analysing larger datasets:
-
-    $ make opt=1
-
-the `ncuda` and `opt` flags can both be passed to turn off CUDA
-support while turning on compiler optimisations.
-
 ## OS X ##
 
 There are a variety of package managers available under OS X, common
@@ -71,18 +55,25 @@ Ubuntu:
 
     $ brew install --c++11 boost eigen
 
-You will need a working compiler to install these packages, so it
-doesn't need to be requested explicitly.  However, and unfortunately,
-interactions with CUDA make the above simple recipe more complicated
-due to it using a different `stdlib`.  The easiest way I have found of
-getting CUDA support working under OSX is by using GCC.  You would
-threfore run:
+Additionally `pkg-config` is needed in order to locate the relevant
+header files:
 
-    $ brew install gcc-4.9
+	$ brew install pkg-config
+
+You will need a working compiler to install these packages, however as
+this is a requirement for homebrew to function this doesn't need to be
+installed explicitly.  Due to unfortunate interactions with CUDA, the
+above simple recipe more complicated due to it using a different
+`stdlib`.  The compiler currently provided by Apple is `clang` derived
+and uses a `stdlib` incompatible with CUDA.  The easiest way I have
+found of getting CUDA support working under OSX is by using GCC, you
+would therefore run:
+
+    $ brew install gcc-4.9 pkg-config
     $ brew install --c++11 --cc=gcc-4.9 --build-from-source boost eigen
 
-which will install the compiler and then build and install the C++
-libraries using the correct conventions.
+which will install the compiler and required `pkg-config`, then build
+and install the C++ libraries using the correct conventions.
 
 ## Redhat Linux ##
 
@@ -107,3 +98,24 @@ to run it "within" Redhat's Developer Toolset:
 We don't have an Nvidia card on this box so therefore can't comment on
 installing CUDA inside Redhat.  If you have success please let me know
 and I'll update this document and other people can benefit.
+
+# Building MDI++ #
+
+Once the relevant compilers and supporting libraries are installed,
+you should be able to build MDI by typing `make`.  Should it fail,
+some build time configuration options are available in `config.mk`.
+By default it will try and compile a debug build with CUDA support
+enabled, but these can be turned off with various preprocessor macros.
+Should you not want to build with CUDA support, you can set the
+preprocessor macro `ncuda`, for example:
+
+    $ make ncuda=1
+
+The makefiles also support `opt` for turning on optimisations, due to
+optimisations within Eigen it is strongly recommended to build with
+this options when analysing larger datasets:
+
+    $ make opt=1
+
+the `ncuda` and `opt` flags can both be passed to turn off CUDA
+support while turning on compiler optimisations.

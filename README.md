@@ -41,7 +41,7 @@ a C++11 compiler (such as GCC or Clang) and the [Boost] and [Eigen]
 libraries.  These can be installed under OSX, assuming you are not
 using CUDA features, by running:
 
-    $ brew install --c++11 boost eigen
+    $ brew install --c++11 boost eigen pkg-config
 
 or under Ubuntu by running:
 

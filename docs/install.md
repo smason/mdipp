@@ -62,12 +62,13 @@ header files:
 
 You will need a working compiler to install these packages, however as
 this is a requirement for homebrew to function this doesn't need to be
-installed explicitly.  Due to unfortunate interactions with CUDA, the
-above simple recipe more complicated due to it using a different
-`stdlib`.  The compiler currently provided by Apple is `clang` derived
-and uses a `stdlib` incompatible with CUDA.  The easiest way I have
-found of getting CUDA support working under OSX is by using GCC, you
-would therefore run:
+installed explicitly.
+
+Should you desire CUDA support, things are somewhat complicated due to
+unfortunate interactions with the `clang` derived compiler currently
+provided by Apple using an incompatible `stdlib`.  The easiest way I
+have found of getting CUDA support working under OSX is by using GCC,
+you would therefore run:
 
     $ brew install gcc-4.9 pkg-config
     $ brew install --c++11 --cc=gcc-4.9 --build-from-source boost eigen

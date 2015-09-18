@@ -187,7 +187,6 @@ public:
 class multinomSampler : public sampler {
   int _nclus;
   const Eigen::MatrixXi &_data;
-  const std::vector<int> &_levels;
 
   std::vector<Eigen::ArrayXXf> _lpar;
 

@@ -8,7 +8,7 @@
 multinomSampler::multinomSampler(class cuda::sampler *gpu,
 				 const Eigen::MatrixXi &data,
 				 const std::vector<int> &levels, int nclus)
-  : _nclus(nclus), _data(data), _levels(levels)
+  : _nclus(nclus), _data(data)
 {
   _lpar.reserve(levels.size());
 

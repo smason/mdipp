@@ -6,15 +6,14 @@
 EIGEN := $(shell pkg-config eigen3 --cflags)
 BOOST :=
 
-CC       := gcc-4.9
-CXX      := g++-4.9
-LINKER   := $(CXX)
-ARCHIVER := ar -rus
-NVCC     := nvcc -arch=sm_21 # -Xptxas="-v"
+LINKER   ?= $(CXX)
+ARCHIVER ?= ar -rus
+NVCC     ?= nvcc -arch=sm_21 # -Xptxas="-v"
 
-CFLAGS   := -std=c99 -Wall
-CXXFLAGS := -std=c++11 -Wall $(EIGEN)
-LDFLAGS  :=
+CFLAGS   ?= -std=c99 -Wall
+CXXFLAGS ?= -std=c++11 -Wall $(EIGEN)
+
+LIBS := -lboost_program_options # -static-libgcc -static-libstdc++
 
 ifdef ncuda
   CFLAGS   := $(CFLAGS)   -DNOCUDA

@@ -1,7 +1,5 @@
 include config.mk
 
-LDFLAGS := $(LDFLAGS)
-
 SUBDIRS := cuda datatypes
 
 .SUFFIXES: .c .cpp .cu .o .cu.o
@@ -9,10 +7,7 @@ SUBDIRS := cuda datatypes
 
 OBJS := interdataset.o csv.o csvpp.o shared.o datatypes/datatypes.a
 
-ifdef ncuda
-LIBS := -static-libgcc -static-libstdc++ -lboost_program_options
-else
-LIBS := -lboost_program_options
+ifndef ncuda
 OBJS := $(OBJS) cuda/cudasampler.a
 endif
 

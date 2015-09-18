@@ -17,7 +17,8 @@ dataset, run:
 As can hopefully be seen from this command line, the list of input
 files is specified and prefixed by their "data type", with standard
 output being piped to a file where it can be used for plotting or
-subsequent analysis.
+subsequent analysis.  More details are available in a document on
+[using MDI][using] and an [example analysis][example].
 
 The majority of the implementation of MDI++ is in C++ with compute
 intensive portions employing CUDA.  A number of R scripts are provided
@@ -40,7 +41,7 @@ a C++11 compiler (such as GCC or Clang) and the [Boost] and [Eigen]
 libraries.  These can be installed under OSX, assuming you are not
 using CUDA features, by running:
 
-    $ brew install --c++11 boost eigen
+    $ brew install --c++11 boost eigen pkg-config
 
 or under Ubuntu by running:
 
@@ -55,3 +56,5 @@ be tweaked depending on your system, and for more details see
 [Boost]: http://www.boost.org/
 [Eigen]: http://eigen.tuxfamily.org/
 [install]: docs/install.md
+[using]: docs/using-mdi.md
+[example]: docs/mdi%20demo.ipynb
